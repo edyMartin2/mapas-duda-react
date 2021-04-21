@@ -4,9 +4,11 @@
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.11.3",
+    "@material-ui/icons": "^4.11.2",
     "@rescripts/cli": "0.0.10",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
+    "react-custom-scroll": "^4.2.2",
     "react-dom": "^16.8.6",
     "react-google-maps": "^9.4.5",
     "react-scripts": "2.1.8"

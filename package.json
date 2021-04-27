@@ -5,13 +5,15 @@
   "dependencies": {
     "@material-ui/core": "^4.11.3",
     "@material-ui/icons": "^4.11.2",
+    "@reduxjs/toolkit": "^1.5.1",
     "@rescripts/cli": "0.0.10",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-custom-scroll": "^4.2.2",
     "react-dom": "^16.8.6",
     "react-google-maps": "^9.4.5",
-    "react-scripts": "2.1.8"
+    "react-scripts": "2.1.8",
+    "redux": "^4.0.5"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -1,23 +1,21 @@
-import React, { Component } from "react";
-import { Marker, GoogleApiWrapper, Polyline } from "react-google-maps";
+import React from "react";
+import { Marker } from "react-google-maps";
 
 const click = function onMarkerClick(data) {
   alert(data);
 };
 export default function Makers(props) {
   let items = [];
-  for (let i = 0;i < props.items.length ; i++) {
-    
+  for (let i = 0; i < props.items.length; i++) {
     items.push(
       <Marker
-        position={props.items[i]}
+        position={{lat:parseInt(props.items[i].lat), lng: parseInt(props.items[i].lng)}}
         onClick={() => {
           click(props.items[i].name);
         }}
-      >
-        
-      </Marker>
+      ></Marker>
     );
+   
   }
   return items;
 }

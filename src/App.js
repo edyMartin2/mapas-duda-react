@@ -1,10 +1,10 @@
-import React, { Component, useState, useEffect } from "react";
+import React, { Component, useEffect } from "react";
 import PropTypes, { array } from "prop-types";
 import "./App.css";
 import { themes } from "./service";
 import withScriptjs from "react-google-maps/lib/withScriptjs";
 import withGoogleMap from "react-google-maps/lib/withGoogleMap";
-import { GoogleMap, Marker, InfoWindow } from "react-google-maps";
+import { GoogleMap } from "react-google-maps";
 import { makeStyles } from "@material-ui/core/styles";
 import Makers from "./components/markers";
 import { createStore } from "redux";
@@ -24,6 +24,7 @@ function counterReducer(
   switch (action.type) {
     case "set":
       state.value = action.latlong;
+      break;
     default:
       return state;
   }
@@ -51,7 +52,8 @@ const Lista = (props) => {
   const classes = useStyles();
 
   const [search, setSearch] = React.useState();
-  const [address, setAddress] = React.useState(props.address);
+  const [address, setAddress] = React.useState([]);
+  const [htts, setHtts] = React.useState([]);
   const filterChange = (item) => {
     setSearch(item.target.value);
   };
@@ -60,14 +62,12 @@ const Lista = (props) => {
     var config = {
       method: "post",
       url: "http://localhost:8000/api/maps",
-      headers: {
-        Cookie: "PHPSESSID=87v649f74jvfn1se8tivjqvv02",
-      },
     };
 
     axios(config)
       .then(function (response) {
-        setAddress(response.data)
+        setAddress(response.data);
+        setHtts(response.data);
       })
       .catch(function (error) {
         console.log(error);
@@ -111,6 +111,7 @@ const Lista = (props) => {
       </Grid>
       <Grid item sm={12} md={10}>
         <InitMap address={address}></InitMap>
+        <TextField value={address}></TextField>
       </Grid>
     </Grid>
   );
@@ -152,11 +153,6 @@ const Repeat = (props) => {
   }
 
   return <div>{item}</div>;
-};
-
-const clickButon = (item) => {
-  store.dispatch({ type: "set", latlong: item });
-  console.log(store.getState());
 };
 
 const Filter = (props) => {

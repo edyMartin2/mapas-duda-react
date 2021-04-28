@@ -1,4 +1,4 @@
-import React, { Component, useState } from "react";
+import React, { Component, useState, useEffect } from "react";
 import PropTypes, { array } from "prop-types";
 import "./App.css";
 import { themes } from "./service";
@@ -15,6 +15,7 @@ import {
   Grid,
   TextField,
 } from "@material-ui/core/";
+import axios from "axios";
 
 function counterReducer(
   state = { value: { lat: 24.123423714090276, lng: -102.38218518677078 } },
@@ -50,10 +51,28 @@ const Lista = (props) => {
   const classes = useStyles();
 
   const [search, setSearch] = React.useState();
-  const [address, setAddress] = React.useState(props.address)
+  const [address, setAddress] = React.useState(props.address);
   const filterChange = (item) => {
     setSearch(item.target.value);
   };
+
+  useEffect(() => {
+    var config = {
+      method: "post",
+      url: "http://localhost:8000/api/maps",
+      headers: {
+        Cookie: "PHPSESSID=87v649f74jvfn1se8tivjqvv02",
+      },
+    };
+
+    axios(config)
+      .then(function (response) {
+        setAddress(response.data)
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }, []);
 
   return (
     <Grid container>
@@ -75,14 +94,12 @@ const Lista = (props) => {
               <ListItem
                 key={index}
                 button
-                
-                onMouseEnter={()=>{
+                onMouseEnter={() => {
                   let arr = [];
-                  arr.push(props.address[index])
+                  arr.push(props.address[index]);
                   setAddress(arr);
                 }}
-
-                onMouseLeave={()=>{
+                onMouseLeave={() => {
                   setAddress(props.address);
                 }}
               >
@@ -205,18 +222,11 @@ class App extends Component {
           lng: -102.3821851867707,
           filters: "mexico verder",
         },
-        {
-          name: "Del otro lado",
-          lat: 20.123423714090276,
-          lng: -12.3821851867707,
-          filters: "mexico verder",
-        },
       ],
       filters: ["filtro 1", "filtro 2", "filtro 3"],
+      api: "http://localhost:8000/api/maps",
     },
   };
-
- 
 
   render() {
     return (

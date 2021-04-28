@@ -1,0 +1,7 @@
+{
+  "main.js": "/static/js/duda-widget.js",
+  "main.js.map": "/static/js/duda-widget.js.map",
+  "index.html": "/index.html",
+  "precache-manifest.c3783f472995ab639674a0287b291c4f.js": "/precache-manifest.c3783f472995ab639674a0287b291c4f.js",
+  "service-worker.js": "/service-worker.js"
+}

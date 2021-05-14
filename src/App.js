@@ -8,6 +8,9 @@ import { GoogleMap } from "react-google-maps";
 import { makeStyles } from "@material-ui/core/styles";
 import Makers from "./components/markers";
 import { createStore } from "redux";
+var denue = require("inegi-denue");
+var client = denue.createClient();
+
 import {
   List,
   ListItem,
@@ -61,7 +64,7 @@ const Lista = (props) => {
   useEffect(() => {
     var config = {
       method: "post",
-      url: "http://localhost:8000/api/maps",
+      url: "http://18.207.162.106/api/maps",
     };
 
     axios(config)
@@ -89,29 +92,28 @@ const Lista = (props) => {
           <ListItem>
             <Filter filters={props.filters}></Filter>
           </ListItem>
-          <Repeat numTimes={props.address}>
+          <Repeat numTimes={address}>
             {(index) => (
               <ListItem
                 key={index}
                 button
                 onMouseEnter={() => {
                   let arr = [];
-                  arr.push(props.address[index]);
-                  setAddress(arr);
+                  arr.push(address[index]);
+                  setHtts(arr);
                 }}
                 onMouseLeave={() => {
-                  setAddress(props.address);
+                  setHtts(address);
                 }}
               >
-                <ListItemText>{props.address[index].name}</ListItemText>
+                <ListItemText>{address[index].name}</ListItemText>
               </ListItem>
             )}
           </Repeat>
         </List>
       </Grid>
       <Grid item sm={12} md={10}>
-        <InitMap address={address}></InitMap>
-        <TextField value={address}></TextField>
+        <InitMap address={htts}></InitMap>
       </Grid>
     </Grid>
   );
@@ -125,9 +127,6 @@ const MyMapComponent = (props) => {
       defaultCenter={{ lat: -34.397, lng: 150.644 }}
       center={props.center}
       zoom={props.zoom}
-      onClick={() => {
-        console.log(props.address);
-      }}
     >
       {/*  [{ lat: -20.397, lng: 100.644 },{ lat: -34.397, lng: 150.644 }, { lat: -10.397, lng: 10.644 },{ lat: -14.397, lng: 150.644 }] */}
       <Makers items={props.address} />
@@ -181,16 +180,25 @@ const Filter = (props) => {
 };
 
 const InitMap = (props) => {
+  const consultaInegi = () => {
+    client.search("restaurantes", latitude, longitude, function (err, places) {
+      console.log(places);
+    });
+  };
   return (
-    <Mymap
-      googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyCFdQ7O0MIewEqbyXhW0k9XemMqnYx0aDQ"
-      loadingElement={<div style={{ height: `100%` }} />}
-      containerElement={<div style={{ height: `400px` }} />}
-      mapElement={<div style={{ height: `100%` }} />}
-      center={store.getState().value}
-      zoom={5}
-      address={props.address}
-    ></Mymap>
+    <>
+      <Mymap
+        googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyCFdQ7O0MIewEqbyXhW0k9XemMqnYx0aDQ"
+        loadingElement={<div style={{ height: `100%` }} />}
+        containerElement={<div style={{ height: `400px` }} />}
+        mapElement={<div style={{ height: `100%` }} />}
+        center={store.getState().value}
+        zoom={5}
+        address={props.address}
+      ></Mymap>
+
+      <button onClick={()=>{consultaInegi()}}>Hey jude</button>
+    </>
   );
 };
 

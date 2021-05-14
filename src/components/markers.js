@@ -6,7 +6,9 @@ const click = function onMarkerClick(data) {
 };
 export default function Makers(props) {
   let items = [];
+  
   for (let i = 0; i < props.items.length; i++) {
+    
     items.push(
       <Marker
         position={{lat:parseInt(props.items[i].lat), lng: parseInt(props.items[i].lng)}}
@@ -14,8 +16,9 @@ export default function Makers(props) {
           click(props.items[i].name);
         }}
       ></Marker>
-    );
-   
-  }
-  return items;
+      
+    )
+  } 
+  console.log(props.items);
+  return items; 
 }
